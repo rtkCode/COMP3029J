@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Index</router-link> |
-      <router-link to="/login">Login</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -30,3 +26,13 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import Header from "@/components/Header.vue";
+
+export default {
+  components: {
+    Header,
+  },
+}
+</script>
