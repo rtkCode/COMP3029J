@@ -9,12 +9,12 @@
               <a-form-item>
                 <a-input
                   v-decorator="[
-                    'userName',
+                    'username',
                     { rules: [{ required: true, message: 'Please input your username!' }] },
                   ]"
                   placeholder="Username"
                 >
-                  <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+                  <a-icon slot="prefix" type="mail" style="color: rgba(0,0,0,.25)" />
                 </a-input>
               </a-form-item>
               <a-form-item>
@@ -66,12 +66,6 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
-  data() {
-    return {
-      current: ['mail'],
-    };
-  },
-
   components: {
     Header,
     Footer
@@ -80,15 +74,36 @@ export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
   },
+
   methods: {
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          this.login(values.username, values.password);
         }
       });
     },
+
+    login(username, password){
+      this.$http({
+        method: 'post',
+        url: this.$global.request("user/signin"),
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        data: this.$qs.stringify({
+          username: username,
+          password: password,
+        })
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
   },
 };
 </script>
