@@ -5,8 +5,9 @@ import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import Register from "../views/Register.vue";
 import Profile from "../views/Profile.vue";
-import Dashboard from '../views/Dashboard.vue'
-import Env from '../views/Env.vue'
+import Dashboard from "../views/Dashboard.vue";
+import Env from "../views/Env.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
@@ -37,16 +38,21 @@ const routes = [
     component: Profile,
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
   },
   {
-    path: '/env',
-    name: 'Env',
-    component: Env
-  }
-]
+    path: "/env",
+    name: "Env",
+    component: Env,
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account,
+  },
+];
 
 const router = new VueRouter({
   routes,
