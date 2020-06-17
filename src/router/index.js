@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import Register from "../views/Register.vue";
 import Profile from "../views/Profile.vue";
+import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(VueRouter);
 
@@ -34,7 +35,12 @@ const routes = [
     name: "Profile",
     component: Profile,
   },
-];
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
+  }
+]
 
 const router = new VueRouter({
   routes,
