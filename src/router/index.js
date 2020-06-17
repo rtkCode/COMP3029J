@@ -6,6 +6,7 @@ import Logout from "../views/Logout.vue";
 import Register from "../views/Register.vue";
 import Profile from "../views/Profile.vue";
 import Dashboard from '../views/Dashboard.vue'
+import Env from '../views/Env.vue'
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/env',
+    name: 'Env',
+    component: Env
   }
 ]
 

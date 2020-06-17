@@ -32,6 +32,11 @@
             <a-menu-item key="u-config">Update config</a-menu-item>
           </a-sub-menu>
 
+          <a-sub-menu key="env">
+            <span slot="title"><a-icon type="global" />Env variables</span>
+            <a-menu-item key="l-var"><router-link to="/env">List variables</router-link></a-menu-item>
+          </a-sub-menu>
+
         </a-menu>
       </a-layout-sider>
 </template>

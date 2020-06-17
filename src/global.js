@@ -21,4 +21,10 @@ global.removeSession=function(){
     localStorage.removeItem('s');
 };
 
+global.hasSession=function(){
+    let s=localStorage.getItem('s');
+    if(s==null) return false;
+    else return true;
+};
+
 export default global
