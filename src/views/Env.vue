@@ -15,12 +15,12 @@
                     <h3>Global Environment Variables</h3>
                     <a-button type="primary" icon="plus-circle" @click="showNewModal">New</a-button>
                 </a-row>
-                <a-table :columns="columns" :data-source="data" :style="{marginTop: '20px'}">
+                <a-table :columns="columns" :data-source="data" :style="{marginTop: '20px'}" :pagination="{defaultPageSize: 20}">
                     <span slot="customTitle">Keys</span>
                     <span slot="key" slot-scope="key"><a-tag color="blue">{{key}}</a-tag></span>
                     <span slot="value" slot-scope="value"><a-tag color="green">{{value}}</a-tag></span>
                     <span slot="comment" slot-scope="comment"><a-tag color="orange">{{comment}}</a-tag></span>
-                    <span slot="action"><a>Delete</a></span>
+                    <span slot="action" slot-scope="key"><a @click="showDeleteConfirm(key.key)">Delete</a></span>
                 </a-table>
             </a-layout-content>
             <Footer></Footer>
@@ -154,6 +154,23 @@ export default {
             this.visibleNew = false;
         },
 
+        showDeleteConfirm(key) {
+            let _this=this;
+            this.$confirm({
+                title: 'Are you sure delete this variable?',
+                content: 'This operation can not be withdrawn',
+                okText: 'Yes',
+                okType: 'danger',
+                cancelText: 'No',
+                onOk() {
+                    _this.unsetEnv(key);
+                },
+                onCancel() {
+
+                },
+            });
+        },
+
         handleNewSubmit(e) {
             e.preventDefault();
             this.form.validateFields((err, values) => {
@@ -175,7 +192,7 @@ export default {
                         }
             })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 if(response.data.code==200){
                     _this.envList=response.data.data;
                     for(let k in _this.envList){
@@ -212,11 +229,13 @@ export default {
                 })
             })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 _this.loading=false;
                 if(response.data.code==200){
                     _this.hideNewModal();
                     _this.$message.success('Set successfully');
+                    _this.data=[];
+                    _this.getEnvList();
                 }else{
                     _this.$message.error("Error: "+response.data.message);
                 }
@@ -238,16 +257,18 @@ export default {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     "Cookie": this.$global.getSession()
                 },
-                data:{
+                data: this.$qs.stringify({
                     key: key
-                }
+                })
             })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 _this.loading=false;
                 if(response.data.code==200){
                     // _this.hideNewModal();
                     _this.$message.success('Unset successfully');
+                    _this.data=[];
+                    _this.getEnvList();
                 }else{
                     _this.$message.error("Error: "+response.data.message);
                 }
