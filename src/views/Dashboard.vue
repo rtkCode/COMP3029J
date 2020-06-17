@@ -10,12 +10,12 @@
                 <a-breadcrumb-item>Overview</a-breadcrumb-item>
                 </a-breadcrumb>
             </a-row>
-            <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+            <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '85vh' }">
                 Content
             </a-layout-content>
+            <Footer></Footer>
         </a-layout>
     </a-layout>
-    <Footer></Footer>
   </a-layout>
 </template>
 

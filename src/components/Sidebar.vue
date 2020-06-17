@@ -1,5 +1,5 @@
 <template>
-    <a-layout-sider width="200" style="background: #fff; padding-top: 10px;">
+    <a-layout-sider width="230" style="background: #fff; padding-top: 10px">
         <a-menu v-model="current" mode="inline" :default-selected-keys="['1']" :default-open-keys="open" :style="{ height: '100%', borderRight: 0}">
           <a-sub-menu key="overview">
             <span slot="title"><a-icon type="dashboard" />Overview</span>
@@ -31,7 +31,7 @@
             <a-menu-item key="r-config">Remote config</a-menu-item>
             <a-menu-item key="u-config">Update config</a-menu-item>
           </a-sub-menu>
-          
+
         </a-menu>
       </a-layout-sider>
 </template>
