@@ -16,8 +16,8 @@
           <a-row type="flex" justify="space-between">
             <h3>All User Accounts</h3>
           </a-row>
-          <div>
-            <a-spin v-if="this.loading" style="text-align:center" />
+          <div style="text-align:center">
+            <a-spin v-if="this.loading" size="large" :style="{marginTop: '60px'}" />
             <a-table
               v-if="!this.loading"
               :columns="columns"

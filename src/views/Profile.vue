@@ -9,34 +9,24 @@
               id="components-form-demo-normal-login"
               :form="form"
               class="login-form"
-              @submit="handleSubmit"
+              layout="inline"
             >
               <a-form-item>
-                <a-input
-                  v-decorator="[
-                    'username', {initialValue:this.username},
-                    { rules: [{ required: true, message: 'Please input your username!' }] },
-                  ]"
-                  placeholder="Username"
-                  default-value="this.username"
-                >
-                  <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-                </a-input>
+                <span>
+                  <b>User Name</b>
+                  : {{this.username}}
+                </span>
+              </a-form-item>
+              <a-form-item>
+                <span>
+                  <b>Register Time</b>
+                  : {{this.registeredTimeStamp}}
+                </span>
               </a-form-item>
               <a-form-item>
                 <a-input
                   v-decorator="[
-                    'email',{initialValue:this.email}
-                  ]"
-                  placeholder="Email"
-                >
-                  <a-icon slot="prefix" type="mail" style="color: rgba(0,0,0,.25)" />
-                </a-input>
-              </a-form-item>
-              <a-form-item>
-                <a-input
-                  v-decorator="[
-                    'Phone', {initialValue:this.phone}
+                    'phone'
                   ]"
                   placeholder="Phone"
                 >
@@ -44,7 +34,20 @@
                 </a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary" html-type="submit" class="login-form-button">Update</a-button>
+                <a-button type="default" @click="handleSubmit('phone')">Update</a-button>
+              </a-form-item>
+              <a-form-item>
+                <a-input
+                  v-decorator="[
+                    'email'
+                  ]"
+                  placeholder="Email"
+                >
+                  <a-icon slot="prefix" type="mail" style="color: rgba(0,0,0,.25)" />
+                </a-input>
+              </a-form-item>
+              <a-form-item>
+                <a-button type="default" @click="handleSubmit('email')">Update</a-button>
               </a-form-item>
             </a-form>
           </a-col>
@@ -64,7 +67,8 @@ export default {
     return {
       username: "",
       phone: "",
-      email: ""
+      email: "",
+      registeredTimeStamp: ""
     };
   },
   components: {
@@ -80,17 +84,20 @@ export default {
   },
 
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
+    handleSubmit(type) {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          this.updateProfile(values.username, values.phone, values.email);
+          type === "email"
+            ? this.updateProfile(type, values.email)
+            : this.updateProfile(type, values.phone);
         }
       });
     },
 
     getProfile() {
+      let _this = this;
+
       this.$http({
         method: "get",
         url: this.$global.request("user/profile"),
@@ -99,30 +106,51 @@ export default {
         .then(function(response) {
           console.log(response);
           if (response.data.code == 200) {
-            (_this.username = response.data.username),
-              (_this.phone = response.data.phone),
-              (_this.email = response.data.email);
+            _this.username = response.data.data.user_name;
+            _this.phone = response.data.data.user_phone;
+            _this.email = response.data.data.user_email;
+            _this.registeredTimeStamp =
+              response.data.data.user_registeredTimestamp;
+            _this.setFormValue();
           }
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    updateProfile(username, phone, email) {
+
+    setFormValue() {
+      this.form.setFieldsValue({
+        username: this.username,
+        phone: this.phone,
+        email: this.email,
+        registeredTimeStamp: this.registeredTimeStamp
+      });
+      console.log("username is: ", this.username);
+      console.log("phone is: ", this.phone);
+      console.log("email is: ", this.email);
+      console.log("user_registeredTimestamp is: ", this.registeredTimeStamp);
+    },
+    updateProfile(type, value) {
+      let _this = this;
       this.$http({
         method: "post",
         url: this.$global.request("user/profile"),
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        data: this.$qs.stringify({
-          username: username,
-          phone: phone,
-          email: email
-        })
+        data:
+          type === "email"
+            ? this.$qs.stringify({
+                email: value
+              })
+            : this.$qs.stringify({
+                phone: value
+              })
       })
         .then(function(response) {
           console.log(response);
           if (response.data.code == 200) {
-            this.$message.success("Update Profile Seccess");
+            _this.getProfile();
+            _this.$message.success("Update Profile Seccess");
           }
         })
         .catch(function(error) {
