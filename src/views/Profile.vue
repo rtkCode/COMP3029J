@@ -1,6 +1,6 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <Header :current="['login']"></Header>
+    <HeaderIn :current="['profile']"></HeaderIn>
     <a-layout-content :style="{ padding: '50px 50px', marginTop: '64px', minHeight: '85vh' }">
       <div :style="{ background: '#fff', padding: '64px 32px', marginTop: '32px' }">
         <a-row type="flex" justify="center" align="middle">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+import HeaderIn from "@/components/HeaderIn.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
@@ -68,7 +68,7 @@ export default {
     };
   },
   components: {
-    Header,
+    HeaderIn,
     Footer
   },
 
