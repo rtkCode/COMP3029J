@@ -16,24 +16,29 @@
                     ]"
                 />
                 </a-form-item>
-                <a-form-item v-bind="formItemLayout" label="E-mail">
-                <a-input
+                <a-form-item v-bind="formItemLayout" label="Phone Number">
+                  <a-input
                     v-decorator="[
-                    'email',
-                    {
-                        rules: [
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
-                        {
-                            required: true,
-                            message: 'Please input your E-mail!',
-                        },
-                        ],
-                    },
+                      'phone',
+                      {
+                        rules: [{ required: true, message: 'Please input your phone number!' }],
+                      },
                     ]"
-                />
+                    style="width: 100%"
+                  >
+                    <a-select
+                      slot="addonBefore"
+                      v-decorator="['prefix', { initialValue: '86' }]"
+                      style="width: 70px"
+                    >
+                      <a-select-option value="86">
+                        +86
+                      </a-select-option>
+                      <a-select-option value="1">
+                        +1
+                      </a-select-option>
+                    </a-select>
+                  </a-input>
                 </a-form-item>
                 <a-form-item v-bind="formItemLayout" label="Password" has-feedback>
                 <a-input
@@ -83,9 +88,7 @@
                 </a-checkbox>
                 </a-form-item>
                 <a-form-item v-bind="tailFormItemLayout">
-                <a-button type="primary" html-type="submit" class="login-form-button">
-                  Register
-                </a-button>
+                <a-button type="primary" html-type="submit" class="login-form-button" :loading="loading">Register</a-button>
                 </a-form-item>
             </a-form>
           </a-col>
@@ -143,6 +146,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       confirmDirty: false,
       residences,
       autoCompleteResult: [],
@@ -181,7 +185,7 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
-          this.register(values.username, values.password, values.email);
+          this.register(values.username, values.password, values.phone);
         }
       });
     },
@@ -218,7 +222,13 @@ export default {
       this.autoCompleteResult = autoCompleteResult;
     },
 
-    register(username, password, email){
+    routeToLogin(){
+      this.$router.push({name: 'Login',query:{ username: this.username}});
+    },
+
+    register(username, password, phone){
+      let _this=this;
+      this.loading=true;
       this.$http({
         method: 'post',
         url: this.$global.request("user/signup"),
@@ -226,14 +236,23 @@ export default {
         data: this.$qs.stringify({
           username: username,
           password: password,
-          email: email
+          phone: phone
         })
       })
       .then(function (response) {
-        console.log(response);
+        _this.loading=false;
+        // console.log(response);
+        if(response.data.code==200){
+          _this.$message.success('Register successfully');
+          setTimeout(_this.routeToLogin,2000);
+        }else{
+          _this.$message.error("Register error: "+response.data.message);
+        }
       })
       .catch(function (error) {
         console.log(error);
+        _this.loading=false;
+        _this.$message.error('Unknow error, check the console');
       });
     }
   },
