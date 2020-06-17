@@ -147,6 +147,7 @@ export default {
   data() {
     return {
       loading: false,
+      username: "",
       confirmDirty: false,
       residences,
       autoCompleteResult: [],
@@ -227,6 +228,7 @@ export default {
     },
 
     register(username, password, phone){
+      this.username=username
       let _this=this;
       this.loading=true;
       this.$http({

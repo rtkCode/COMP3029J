@@ -41,16 +41,10 @@
                 >
                   Remember me
                 </a-checkbox>
-                <a class="login-form-forgot" href="">
-                  Forgot password
-                </a>
-                <a-button type="primary" html-type="submit" class="login-form-button">
-                  Log in
-                </a-button>
+                <a class="login-form-forgot" href="">Forgot password</a>
+                <a-button type="primary" html-type="submit" class="login-form-button" :loading="loading">Log in</a-button>
                 Or
-                <a href="">
-                  register now!
-                </a>
+                <router-link to="/register">register now!</router-link>
               </a-form-item>
             </a-form>
           </a-col>
@@ -66,6 +60,12 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
+  data(){
+    return{
+      loading: false,
+    }
+  },
+
   components: {
     Header,
     Footer
@@ -73,6 +73,12 @@ export default {
   
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
+  },
+
+  mounted(){
+    this.form.setFieldsValue({
+      username: this.$route.query.username,
+    });
   },
 
   methods: {
@@ -86,7 +92,13 @@ export default {
       });
     },
 
+    routeToDashboard(){
+      this.$router.push({name: 'Dashboard'});
+    },
+
     login(username, password){
+      let _this=this;
+      this.loading=true;
       this.$http({
         method: 'post',
         url: this.$global.request("user/signin"),
@@ -97,10 +109,20 @@ export default {
         })
       })
       .then(function (response) {
+        _this.loading=false;
         console.log(response);
+        if(response.data.code==200){
+          _this.$global.storeSession("PHPSESSID="+response.data.data.sessionId);
+          _this.$message.success('Login successfully');
+          setTimeout(_this.routeToDashboard,1500);
+        }else{
+          _this.$message.error("Login error: "+response.data.message);
+        }
       })
       .catch(function (error) {
         console.log(error);
+        _this.loading=false;
+        _this.$message.error('Unknow error, check the console');
       });
     }
 

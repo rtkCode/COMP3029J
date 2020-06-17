@@ -8,6 +8,7 @@ import global from "./global.js"
 import router from './router'
 
 Vue.config.productionTip = false
+axios.defaults.withCredentials = true
 
 Vue.use(Antd);
 Vue.prototype.$qs = qs
