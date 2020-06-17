@@ -110,7 +110,7 @@ export default {
       })
       .then(function (response) {
         _this.loading=false;
-        console.log(response);
+        // console.log(response);
         if(response.data.code==200){
           _this.$global.storeSession("PHPSESSID="+response.data.data.sessionId);
           _this.$message.success('Login successfully');
