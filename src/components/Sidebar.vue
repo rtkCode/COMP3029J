@@ -19,10 +19,7 @@
         <span slot="title">
           <a-icon type="cloud-server" />Cluster
         </span>
-        <a-menu-item key="l-cluster">List clusters</a-menu-item>
-        <a-menu-item key="c-cluster">Create cluster</a-menu-item>
-        <a-menu-item key="u-cluster">Update cluster</a-menu-item>
-        <a-menu-item key="a-cluster">Assign cluster</a-menu-item>
+        <a-menu-item key="l-cluster"><router-link to="/cluster">List clusters</router-link></a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="node">
