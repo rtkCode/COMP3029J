@@ -27,7 +27,9 @@
 
       <a-sub-menu key="config">
         <span slot="title"> <a-icon type="setting" />Config </span>
-        <a-menu-item key="l-config">List configs</a-menu-item>
+        <a-menu-item key="l-config">
+          <router-link to="/config/index">List configs</router-link>
+        </a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="env">
