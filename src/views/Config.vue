@@ -311,6 +311,7 @@ export default {
           } else {
             _this.$message.error("Error: " + response.data.message);
           }
+          _this.form.resetFields();
         })
         .catch(function(error) {
           console.log(error);
