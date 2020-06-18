@@ -153,8 +153,13 @@ export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "profile_form" });
   },
+
   mounted() {
     this.getProfile();
+  },
+
+  created() {
+    document.title = "Profile | Zeus";
   },
 
   methods: {

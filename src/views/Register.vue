@@ -180,6 +180,10 @@ export default {
     this.form = this.$form.createForm(this, { name: 'register' });
   },
 
+  created() {
+    document.title = "Register | Zeus";
+  },
+
   methods: {
     handleSubmit(e) {
       e.preventDefault();

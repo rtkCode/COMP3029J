@@ -9,8 +9,8 @@
     >
       <a-sub-menu key="overview">
         <span slot="title"> <a-icon type="dashboard" />Overview </span>
-        <a-menu-item key="1">option1</a-menu-item>
-        <a-menu-item key="2">option2</a-menu-item>
+        <a-menu-item key="a">Analysis</a-menu-item>
+        <a-menu-item key="m">Monitor</a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="cluster">
@@ -23,10 +23,6 @@
       <a-sub-menu key="node">
         <span slot="title"> <a-icon type="laptop" />Node </span>
         <a-menu-item key="l-node">List nodes</a-menu-item>
-        <a-menu-item key="c-node">Create node</a-menu-item>
-        <a-menu-item key="r-node">Remote node</a-menu-item>
-        <a-menu-item key="u-node">Update node</a-menu-item>
-        <a-menu-item key="a-node">Assign node</a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="config">

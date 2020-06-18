@@ -141,6 +141,10 @@ export default {
         Footer
     },
 
+    created() {
+        document.title = "Environment | Zeus";
+    },
+
     beforeCreate() {
         this.form = this.$form.createForm(this, { name: 'normal_login' });
     },

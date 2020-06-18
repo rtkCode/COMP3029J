@@ -2,7 +2,7 @@
   <a-layout id="components-layout-demo-fixed">
     <HeaderIn :current="['dashboard']"></HeaderIn> 
     <a-layout :style="{marginTop: '64px', minHeight: '85vh'}">
-        <Sidebar :current="['2']" :open="['overview']"></Sidebar>
+        <Sidebar :current="['a']" :open="['overview']"></Sidebar>
         <a-layout style="padding: 0 24px 24px">
             <a-row type="flex" justify="start">
                 <a-breadcrumb style="margin: 16px 0">
@@ -29,6 +29,10 @@ export default {
     HeaderIn,
     Sidebar,
     Footer
+  },
+
+  created() {
+    document.title = "Dashboard | Zeus";
   },
 
   methods: {

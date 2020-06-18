@@ -196,6 +196,10 @@ export default {
     this.form = this.$form.createForm(this, { name: "normal_login" });
   },
 
+  created() {
+    document.title = "Config | Zeus";
+  },
+
   mounted() {
     this.getConfigList();
   },

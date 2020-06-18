@@ -10,6 +10,14 @@
 </div>
 </template>
 
+<script>
+export default {
+    created() {
+        document.title = "Zeus MEC Management Platform";
+    },
+}
+</script>
+
 <style scoped>
 .body {
     width: 100%;

@@ -112,6 +112,10 @@ export default {
     this.form = this.$form.createForm(this, { name: "normal_login" });
   },
 
+  created() {
+    document.title = "Login | Zeus";
+  },
+
   mounted() {
     this.form.setFieldsValue({
       username: this.$route.query.username,

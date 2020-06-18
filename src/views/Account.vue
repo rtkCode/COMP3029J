@@ -126,6 +126,10 @@ export default {
     this.getUserList();
   },
 
+  created() {
+    document.title = "Account | Zeus";
+  },
+
   methods: {
     routeToLogin() {
       this.$router.push({ name: "Login" });
