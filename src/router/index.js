@@ -9,6 +9,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Env from "../views/Env.vue";
 import Account from "../views/Account.vue";
 import Cluster from "../views/Cluster.vue";
+import Config from "../views/Config.vue";
 
 Vue.use(VueRouter);
 
@@ -57,6 +58,11 @@ const routes = [
     path: "/cluster",
     name: "Cluster",
     component: Cluster,
+  },
+  {
+    path: "/config/index",
+    name: "Config",
+    component: Config,
   },
 ];
 
