@@ -20,7 +20,10 @@
         >
           <a-row type="flex" justify="space-between">
             <h3>Configuration Variables</h3>
-            <a-button type="primary" icon="plus-circle" @click="showNewModal"
+            <a-button
+              type="primary"
+              icon="plus-circle"
+              @click="showNewModal({})"
               >New</a-button
             >
           </a-row>
@@ -49,8 +52,9 @@
             <span slot="comment" slot-scope="comment"
               ><a-tag color="orange">{{ comment }}</a-tag></span
             >
-            <span slot="action" slot-scope="key"
-              ><a @click="showDeleteConfirm(key.key)">Delete</a></span
+            <span slot="action" slot-scope="key, record"
+              ><a @click="showDeleteConfirm(key.key)">Delete</a> |
+              <a @click="showNewModal(record)">Update</a></span
             >
           </a-table>
         </a-layout-content>
@@ -74,7 +78,10 @@
           <a-input
             v-decorator="[
               'key',
-              { rules: [{ required: true, message: 'Please input key!' }] },
+              {
+                rules: [{ required: true, message: 'Please input key!' }],
+                initialValue: this.currentConfig.key,
+              },
             ]"
             placeholder="Key"
           >
@@ -82,19 +89,23 @@
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-input
+          <a-textarea
             v-decorator="[
               'value',
-              { rules: [{ required: true, message: 'Please input value!' }] },
+              {
+                rules: [{ required: true, message: 'Please input value!' }],
+                initialValue: JSON.stringify(this.currentConfig.value),
+              },
             ]"
             placeholder="Value"
+            :row="4"
           >
             <a-icon
               slot="prefix"
               type="number"
               style="color: rgba(0,0,0,.25)"
             />
-          </a-input>
+          </a-textarea>
         </a-form-item>
         <a-form-item>
           <a-input
@@ -104,6 +115,7 @@
                 rules: [
                   { required: true, message: 'Please leave some comments!' },
                 ],
+                initialValue: this.currentConfig.comment,
               },
             ]"
             placeholder="Comments"
@@ -169,6 +181,8 @@ export default {
       data: [],
       columns,
       pageLoading: true,
+      currentKey: null,
+      currentConfig: {},
     };
   },
 
@@ -198,8 +212,13 @@ export default {
       });
     },
 
-    showNewModal() {
+    showNewModal(record) {
       this.visibleNew = true;
+      this.currentConfig = JSON.parse(JSON.stringify(record));
+      console.log(
+        "currentConfig: ",
+        JSON.parse(JSON.stringify(this.currentConfig))
+      );
     },
 
     hideNewModal() {
@@ -207,6 +226,7 @@ export default {
     },
 
     showDeleteConfirm(key) {
+      console.log("key is: ", key);
       let _this = this;
       this.$confirm({
         title: "Are you sure delete this variable?",
@@ -275,7 +295,7 @@ export default {
           Cookie: this.$global.getSession(),
         },
         data: this.$qs.stringify({
-          key: key,
+          name: key,
           value: value,
           comment: comment,
         }),
@@ -310,7 +330,7 @@ export default {
           Cookie: this.$global.getSession(),
         },
         data: this.$qs.stringify({
-          key: key,
+          name: key,
         }),
       })
         .then(function(response) {
