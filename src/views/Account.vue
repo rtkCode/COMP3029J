@@ -6,7 +6,7 @@
       <a-layout style="padding: 0 24px 24px">
         <a-row type="flex" justify="start">
           <a-breadcrumb style="margin: 16px 0">
-            <a-breadcrumb-item>Environment variable</a-breadcrumb-item>
+            <a-breadcrumb-item>User Accounts</a-breadcrumb-item>
             <a-breadcrumb-item>List users</a-breadcrumb-item>
           </a-breadcrumb>
         </a-row>

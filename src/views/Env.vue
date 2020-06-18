@@ -15,7 +15,10 @@
                     <h3>Global Environment Variables</h3>
                     <a-button type="primary" icon="plus-circle" @click="showNewModal">New</a-button>
                 </a-row>
-                <a-table :columns="columns" :data-source="data" :style="{marginTop: '20px'}" :pagination="{defaultPageSize: 20}">
+                <div style="text-align: center">
+                    <a-spin v-if="this.pageLoading" size="large" :style="{ marginTop: '60px' }"/>
+                </div>
+                <a-table v-if="!this.pageLoading" :columns="columns" :data-source="data" :style="{marginTop: '20px'}" :pagination="{defaultPageSize: 20}">
                     <span slot="customTitle">Keys</span>
                     <span slot="key" slot-scope="key"><a-tag color="blue">{{key}}</a-tag></span>
                     <span slot="value" slot-scope="value"><a-tag color="green">{{value}}</a-tag></span>
@@ -128,6 +131,7 @@ export default {
             envList: {},
             data: [],
             columns,
+            pageLoading: true
         };
     },
 
@@ -193,6 +197,7 @@ export default {
             })
             .then(function (response) {
                 // console.log(response);
+                _this.pageLoading=false;
                 if(response.data.code==200){
                     _this.envList=response.data.data;
                     for(let k in _this.envList){
@@ -208,6 +213,7 @@ export default {
             })
             .catch(function (error) {
                 console.log(error);
+                _this.pageLoading=false;
                 _this.$message.error('Unknow error, check the console');
             });
         },
