@@ -43,9 +43,7 @@ export default {
                 // console.log(response);
                 _this.loading=false;
                 if(response.data.code==200){
-                    _this.$global.removeSession();
-                    _this.$message.success('Logout successfully');
-                    setTimeout(_this.routeToLogin,2000);
+                    
                 }else{
                     _this.$message.error("Logout error: "+response.data.message);
                 }
@@ -55,6 +53,9 @@ export default {
                 _this.loading=false;
                 _this.$message.error('Unknow error, check the console');
             });
+            this.$global.removeSession();
+            this.$message.success('Logout successfully');
+            setTimeout(_this.routeToLogin,2000);
         }
     }
 };
