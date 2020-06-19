@@ -4,7 +4,7 @@
     <div class="content">
         <div class="title1">Zeus</div>
         <div class="title2"><small>A high scalability MEC Management Platform</small></div>
-        <a-button :size="'large'" type="primary" ghost><router-link to="/dashboard">Enter platform</router-link></a-button>
+        <a-button :size="'large'" type="primary" @click="route()" :loading="loading" ghost>Enter platform</a-button>
     </div>
   </div>
 </div>
@@ -12,9 +12,22 @@
 
 <script>
 export default {
+    data(){
+        return{
+            loading: false
+        }
+    },
+
     created() {
         document.title = "Zeus MEC Management Platform";
     },
+
+    methods:{
+        route(){
+            this.loading=true;
+            this.$router.push({ name: "Dashboard" });
+        }
+    }
 }
 </script>
 

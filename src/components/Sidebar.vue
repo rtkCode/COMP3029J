@@ -9,15 +9,14 @@
     >
       <a-sub-menu key="overview">
         <span slot="title"> <a-icon type="dashboard" />Overview </span>
-        <a-menu-item key="a">Analysis</a-menu-item>
-        <a-menu-item key="m">Monitor</a-menu-item>
+        <a-menu-item key="m"><router-link to="/dashboard">Monitor</router-link></a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="cluster">
         <span slot="title"> <a-icon type="cloud-server" />Cluster </span>
-        <a-menu-item key="l-cluster"
-          ><router-link to="/cluster">List clusters</router-link></a-menu-item
-        >
+        <a-menu-item key="l-cluster">
+          <router-link to="/cluster">List clusters</router-link>
+        </a-menu-item>
       </a-sub-menu>
 
       <a-sub-menu key="node">
