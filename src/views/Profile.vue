@@ -15,56 +15,67 @@
               class="login-form"
               layout="inline"
             >
-              <a-form-item>
-                <span>
-                  <b>User Name</b>
-                  : {{ this.username }}
-                </span>
-              </a-form-item>
-              <a-form-item>
-                <span>
-                  <b>Register Time</b>
-                  : {{ this.registeredTimeStamp }}
-                </span>
-              </a-form-item>
-              <a-form-item :style="{ marginTop: '24px' }">
-                <a-input v-decorator="['phone']" placeholder="Phone">
-                  <a-icon
-                    slot="prefix"
-                    type="phone"
-                    style="color: rgba(0,0,0,.25)"
-                  />
-                </a-input>
-              </a-form-item>
-              <a-form-item :style="{ marginTop: '24px' }">
-                <a-button type="default" @click="handleSubmit('phone')"
-                  >Update</a-button
-                >
-              </a-form-item>
-              <a-form-item>
-                <a-input v-decorator="['email']" placeholder="Email">
-                  <a-icon
-                    slot="prefix"
-                    type="mail"
-                    style="color: rgba(0,0,0,.25)"
-                  />
-                </a-input>
-              </a-form-item>
-              <a-form-item>
-                <a-button type="default" @click="handleSubmit('email')"
-                  >Update</a-button
-                >
-              </a-form-item>
-              <a-form-item :style="{ marginTop: '24px' }">
-                <a-button ghost type="primary" @click="showNewModal()"
-                  >Reset Password</a-button
-                >
-              </a-form-item>
-              <a-form-item :style="{ marginTop: '24px' }">
-                <a-button ghost type="danger" @click="showConfirm()"
-                  >Freeze Account</a-button
-                >
-              </a-form-item>
+              <a-row>
+                <a-form-item>
+                  <span>
+                    <b>User Name</b>
+                    : {{ this.username }}
+                  </span>
+                </a-form-item>
+              </a-row>
+              <a-row>
+                <a-form-item>
+                  <span>
+                    <b>Register Time</b>
+                    : {{ this.registeredTimeStamp }}
+                  </span>
+                </a-form-item>
+              </a-row>
+              <a-row>
+                <a-form-item :style="{ marginTop: '24px' }">
+                  <a-input v-decorator="['phone']" placeholder="Phone">
+                    <a-icon
+                      slot="prefix"
+                      type="phone"
+                      style="color: rgba(0,0,0,.25)"
+                    />
+                  </a-input>
+                </a-form-item>
+                <a-form-item :style="{ marginTop: '24px' }">
+                  <a-button type="default" @click="handleSubmit('phone')"
+                    >Update</a-button
+                  >
+                </a-form-item>
+              </a-row>
+              <a-row>
+                <a-form-item>
+                  <a-input v-decorator="['email']" placeholder="Email">
+                    <a-icon
+                      slot="prefix"
+                      type="mail"
+                      style="color: rgba(0,0,0,.25)"
+                    />
+                  </a-input>
+                </a-form-item>
+                <a-form-item>
+                  <a-button type="default" @click="handleSubmit('email')"
+                    >Update</a-button
+                  >
+                </a-form-item>
+              </a-row>
+              <a-row>
+                <a-form-item :style="{ marginTop: '24px' }">
+                  <a-button ghost type="primary" @click="showNewModal()"
+                    >Reset Password</a-button
+                  >
+                </a-form-item>
+
+                <a-form-item :style="{ marginTop: '24px' }">
+                  <a-button ghost type="danger" @click="showConfirm()"
+                    >Freeze Account</a-button
+                  >
+                </a-form-item>
+              </a-row>
             </a-form>
           </a-col>
         </a-row>

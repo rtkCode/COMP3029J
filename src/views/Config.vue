@@ -46,7 +46,7 @@
               ><a-tag color="blue">{{ key }}</a-tag></span
             >
             <span slot="value" slot-scope="value"
-              ><a @click="showMetadata(value)">Detials</a></span
+              ><a @click="showMetadata(value)">Details</a></span
             >
 
             <span slot="comment" slot-scope="comment"
@@ -209,7 +209,7 @@ export default {
       console.log("value is: ", value);
       const h = this.$createElement;
       this.$info({
-        title: "The Detial Value",
+        title: "The Detail Value",
         okText: "Close",
         content: h("div", {}, [h("pre", JSON.stringify(value, null, 2))]),
         onOk() {},
