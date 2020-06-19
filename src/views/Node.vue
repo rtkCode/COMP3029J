@@ -42,9 +42,11 @@
             <span slot="metadata" slot-scope="id"
               ><a @click="getNode(id.alias, id.id)">Metadata</a></span
             >
+
             <span slot="action" slot-scope="id">
               <a @click="showModal(id)">Update</a> |
-              <a @click="showDeleteConfirm(id.id)">Delete</a>
+              <a @click="showDeleteConfirm(id.id)">Delete</a> |
+              <a @click="showAssignModal(id.id)">Assign</a>
             </span>
           </a-table>
         </a-layout-content>
@@ -164,6 +166,31 @@
         </a-form-item>
       </a-form>
     </a-modal>
+    <a-modal
+      v-model="visibleAssign"
+      :title="'Assign nodes to cluster (id: ' + id + ')'"
+      on-ok="handleOk"
+    >
+      <template slot="footer">
+        <a-button key="back" @click="hideAssignModal">Cancel</a-button>
+        <a-button
+          key="submit"
+          type="primary"
+          :loading="loading"
+          @click="assignCluster(id)"
+          >Assign</a-button
+        >
+      </template>
+      <a-select
+        style="width: 100%"
+        placeholder="Please select nodes from the list"
+        @change="handleChange"
+      >
+        <a-select-option v-for="i in this.clusterList" :key="i.cluster_id">{{
+          i.cluster_alias
+        }}</a-select-option>
+      </a-select>
+    </a-modal>
   </a-layout>
 </template>
 
@@ -210,6 +237,7 @@ const columns = [
     key: "metadata",
     scopedSlots: { customRender: "metadata" },
   },
+
   {
     title: "Action",
     key: "action",
@@ -231,6 +259,8 @@ export default {
       currentMetadata: null,
       currentNode: null,
       clusterList: [],
+      visibleAssign: false,
+      selectedCluster: null,
     };
   },
 
@@ -254,6 +284,54 @@ export default {
   },
 
   methods: {
+    handleChange(value) {
+      // console.log(value);
+      this.selectedCluster = value;
+    },
+    showAssignModal(id) {
+      this.id = id;
+
+      this.visibleAssign = true;
+    },
+
+    hideAssignModal() {
+      this.visibleAssign = false;
+    },
+
+    assignCluster(id) {
+      let _this = this;
+      this.loading = true;
+      this.$http({
+        method: "post",
+        url: this.$global.request("node/assign"),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Cookie: this.$global.getSession(),
+        },
+        data: this.$qs.stringify({
+          cluster_id: JSON.stringify(this.selectedCluster),
+          node_uuid: id,
+        }),
+      })
+        .then(function(response) {
+          console.log(response);
+          _this.loading = false;
+          if (response.data.code == 200) {
+            _this.$message.success("Assign successfully");
+            _this.hideAssignModal();
+            _this.data = [];
+            _this.getNodeList();
+          } else {
+            _this.$message.error("Error: " + response.data.message);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+          _this.loading = false;
+          _this.$message.error("Unknow error, check the console");
+        });
+    },
+
     showModal(node) {
       this.visibleNew = true;
       this.currentMetadata = null;
