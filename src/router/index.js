@@ -86,26 +86,26 @@ router.beforeEach((to, from, next) => {
     if (global.getSession() == null) {
       next({name: 'Login'});
     }else{
-      next();
-      // http({
-      //   method: "get",
-      //   url: global.request("user/profile"),
-      //   headers: { 
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //     "Cookie": global.getSession(),
-      //   },
-      // })
-      // .then(function(response) {
-      //   if (response.data.code == 200) {
-      //     next();
-      //   }else if(response.data.code == 403){
-      //     global.removeSession();
-      //     next({name: 'Login'});
-      //   }
-      // })
-      // .catch(function(error) {
-      //   console.log(error);
-      // });
+      // next();
+      http({
+        method: "get",
+        url: global.request("user/profile"),
+        headers: { 
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Cookie": global.getSession(),
+        },
+      })
+      .then(function(response) {
+        if (response.data.code == 200) {
+          next();
+        }else if(response.data.code == 403){
+          global.removeSession();
+          next({name: 'Login'});
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     }
   }else{
     next();
