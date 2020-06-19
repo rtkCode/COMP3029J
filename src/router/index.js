@@ -84,9 +84,11 @@ const routes = [
     name: "Config",
     component: Config,
   },
+  {path:'*',redirect:'/'}
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 
