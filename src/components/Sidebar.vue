@@ -22,7 +22,9 @@
 
       <a-sub-menu key="node">
         <span slot="title"> <a-icon type="laptop" />Node </span>
-        <a-menu-item key="l-node">List nodes</a-menu-item>
+        <a-menu-item key="l-node">
+          <router-link to="/node">List nodes</router-link></a-menu-item
+        >
       </a-sub-menu>
 
       <a-sub-menu key="config">

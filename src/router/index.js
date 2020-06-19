@@ -8,9 +8,10 @@ import Dashboard from "../views/Dashboard.vue";
 import Env from "../views/Env.vue";
 import Account from "../views/Account.vue";
 import Cluster from "../views/Cluster.vue";
+import Node from "../views/Node.vue";
 import Config from "../views/Config.vue";
-import global from "../global.js"
-import http from 'axios'
+import global from "../global.js";
+import http from "axios";
 
 Vue.use(VueRouter);
 
@@ -35,7 +36,7 @@ const routes = [
     name: "Profile",
     component: Profile,
     meta: {
-      requireAuth: true
+      requireAuth: true,
     },
   },
   {
@@ -43,7 +44,7 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: {
-      requireAuth: true
+      requireAuth: true,
     },
   },
   {
@@ -51,7 +52,7 @@ const routes = [
     name: "Env",
     component: Env,
     meta: {
-      requireAuth: true
+      requireAuth: true,
     },
   },
   {
@@ -59,7 +60,15 @@ const routes = [
     name: "Account",
     component: Account,
     meta: {
-      requireAuth: true
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/node",
+    name: "Node",
+    component: Node,
+    meta: {
+      requireAuth: true,
     },
   },
   {
@@ -67,7 +76,7 @@ const routes = [
     name: "Cluster",
     component: Cluster,
     meta: {
-      requireAuth: true
+      requireAuth: true,
     },
   },
   {
@@ -84,29 +93,29 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     if (global.getSession() == null) {
-      next({name: 'Login'});
-    }else{
+      next({ name: "Login" });
+    } else {
       http({
         method: "get",
         url: global.request("user/profile"),
-        headers: { 
+        headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Cookie": global.getSession(),
+          Cookie: global.getSession(),
         },
       })
-      .then(function(response) {
-        if (response.data.code == 200) {
-          next();
-        }else if(response.data.code == 403){
-          global.removeSession();
-          next({name: 'Login'});
-        }
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .then(function(response) {
+          if (response.data.code == 200) {
+            next();
+          } else if (response.data.code == 403) {
+            global.removeSession();
+            next({ name: "Login" });
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
-  }else{
+  } else {
     next();
   }
 });
